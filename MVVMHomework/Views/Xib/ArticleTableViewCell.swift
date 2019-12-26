@@ -28,7 +28,7 @@ class ArticleTableViewCell: UITableViewCell {
     }
     
     func setupCell(_ articleModel: ArticleModel) {
-        articleImageView.kf.setImage(with: articleModel.imageUrl)
+        articleImageView.kf.setImage(with: articleModel.imageUrl, placeholder: UIImage(named: "default"))
         titleLabel.text = articleModel.articleTitle
         numberOfViewLabel.text = "\(articleModel.numberOfViews)"
         dateLabel.text = articleModel.date

@@ -9,4 +9,5 @@ target 'MVVMHomework' do
 	pod 'Alamofire'
 	pod 'SwiftyJSON'
 	pod 'Kingfisher'
+	pod 'JJFloatingActionButton'
 end

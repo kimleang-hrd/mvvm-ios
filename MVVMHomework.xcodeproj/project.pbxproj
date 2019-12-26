@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D174A3723B3853C009424B6 /* ArticleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D174A3623B3853C009424B6 /* ArticleDelegate.swift */; };
+		8D174A3923B399FA009424B6 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D174A3823B399FA009424B6 /* DetailViewController.swift */; };
 		8D650E9A23B230DF001197EF /* CustomDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D650E9923B230DF001197EF /* CustomDateFormatter.swift */; };
 		8D72C9D023B0F95C00DAE56C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D72C9CF23B0F95C00DAE56C /* AppDelegate.swift */; };
 		8D72C9D223B0F95C00DAE56C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D72C9D123B0F95C00DAE56C /* SceneDelegate.swift */; };
@@ -23,13 +25,15 @@
 		8D755CD423B1EF3C00E2948C /* ArticleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D755CD323B1EF3C00E2948C /* ArticleService.swift */; };
 		8DCA7B1323B208C30071B517 /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA7B1223B208C30071B517 /* ArticleViewModel.swift */; };
 		8DCA7B1523B20B9E0071B517 /* ArticleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA7B1423B20B9E0071B517 /* ArticleModel.swift */; };
-		8DE3C69E23B2607E008E7DE2 /* AddArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE3C69D23B2607E008E7DE2 /* AddArticleViewController.swift */; };
+		8DE3C69E23B2607E008E7DE2 /* MutatingArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE3C69D23B2607E008E7DE2 /* MutatingArticleViewController.swift */; };
 		ACF7FF329A4BB01958DC0D1C /* Pods_MVVMHomework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536C4CBFE8D4C90A9906541B /* Pods_MVVMHomework.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		536C4CBFE8D4C90A9906541B /* Pods_MVVMHomework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MVVMHomework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C6E99F99BFDAFFFD72E20CF /* Pods-MVVMHomework.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMHomework.release.xcconfig"; path = "Target Support Files/Pods-MVVMHomework/Pods-MVVMHomework.release.xcconfig"; sourceTree = "<group>"; };
+		8D174A3623B3853C009424B6 /* ArticleDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDelegate.swift; sourceTree = "<group>"; };
+		8D174A3823B399FA009424B6 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		8D650E9923B230DF001197EF /* CustomDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormatter.swift; sourceTree = "<group>"; };
 		8D72C9CC23B0F95C00DAE56C /* MVVMHomework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVVMHomework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D72C9CF23B0F95C00DAE56C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -48,7 +52,7 @@
 		8D755CD323B1EF3C00E2948C /* ArticleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleService.swift; sourceTree = "<group>"; };
 		8DCA7B1223B208C30071B517 /* ArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewModel.swift; sourceTree = "<group>"; };
 		8DCA7B1423B20B9E0071B517 /* ArticleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleModel.swift; sourceTree = "<group>"; };
-		8DE3C69D23B2607E008E7DE2 /* AddArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddArticleViewController.swift; sourceTree = "<group>"; };
+		8DE3C69D23B2607E008E7DE2 /* MutatingArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutatingArticleViewController.swift; sourceTree = "<group>"; };
 		AADFD8847F34846D72DF1188 /* Pods-MVVMHomework.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMHomework.debug.xcconfig"; path = "Target Support Files/Pods-MVVMHomework/Pods-MVVMHomework.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,6 +75,14 @@
 				5C6E99F99BFDAFFFD72E20CF /* Pods-MVVMHomework.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		8D174A3523B38517009424B6 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				8D174A3623B3853C009424B6 /* ArticleDelegate.swift */,
+			);
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 		8D72C9C323B0F95C00DAE56C = {
@@ -146,8 +158,10 @@
 		8D72C9E723B0F99500DAE56C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8D174A3523B38517009424B6 /* Delegates */,
 				8D72C9F923B104F100DAE56C /* ArticleTableViewController.swift */,
-				8DE3C69D23B2607E008E7DE2 /* AddArticleViewController.swift */,
+				8DE3C69D23B2607E008E7DE2 /* MutatingArticleViewController.swift */,
+				8D174A3823B399FA009424B6 /* DetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -331,14 +345,16 @@
 				8DCA7B1523B20B9E0071B517 /* ArticleModel.swift in Sources */,
 				8D72C9D023B0F95C00DAE56C /* AppDelegate.swift in Sources */,
 				8D72C9EE23B103CD00DAE56C /* APIManager.swift in Sources */,
+				8D174A3723B3853C009424B6 /* ArticleDelegate.swift in Sources */,
 				8D72C9D223B0F95C00DAE56C /* SceneDelegate.swift in Sources */,
 				8D72C9FA23B104F100DAE56C /* ArticleTableViewController.swift in Sources */,
 				8D650E9A23B230DF001197EF /* CustomDateFormatter.swift in Sources */,
-				8DE3C69E23B2607E008E7DE2 /* AddArticleViewController.swift in Sources */,
+				8DE3C69E23B2607E008E7DE2 /* MutatingArticleViewController.swift in Sources */,
 				8D755CD223B1E85700E2948C /* Article.swift in Sources */,
 				8D755CD423B1EF3C00E2948C /* ArticleService.swift in Sources */,
 				8D755CCC23B1CF2200E2948C /* ArticleTableViewCell.swift in Sources */,
 				8DCA7B1323B208C30071B517 /* ArticleViewModel.swift in Sources */,
+				8D174A3923B399FA009424B6 /* DetailViewController.swift in Sources */,
 				8D72C9EC23B102AD00DAE56C /* SweetAlert.swift in Sources */,
 				8D755CD023B1E84500E2948C /* ArticleInitialization.swift in Sources */,
 			);
@@ -488,6 +504,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6NBB44NAY3;
 				INFOPLIST_FILE = "$(SRCROOT)/MVVMHomework/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -507,6 +524,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6NBB44NAY3;
 				INFOPLIST_FILE = "$(SRCROOT)/MVVMHomework/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

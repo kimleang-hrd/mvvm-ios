@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class ArticleViewModel {
     
@@ -15,6 +16,24 @@ class ArticleViewModel {
     func fetchArticles(page: Int, completion: @escaping ([ArticleModel]) -> ()) {
         articleService.fetchArticles(page: page) { (articles) in
             completion(articles.compactMap(ArticleModel.init))
+        }
+    }
+    
+    func addArticle(image: UIImage, article: Article, completion: @escaping (ArticleModel) -> ()) {
+        articleService.addArticle(image: image, article: article) { (article) in
+            completion(ArticleModel(article: article))
+        }
+    }
+    
+    func updateArticle(isImageNotChanged: Bool, image: UIImage, article: Article, completion: @escaping (ArticleModel) -> ()) {
+        articleService.updateArticle(isImageNotChanged: isImageNotChanged, image: image, article: article) { (article) in
+            completion(ArticleModel(article: article))
+        }
+    }
+    
+    func deleteArticle(id: Int, completion: @escaping () -> ()) {
+        articleService.deleteArticle(id: id) {
+            completion()
         }
     }
     

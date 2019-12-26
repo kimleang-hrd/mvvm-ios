@@ -12,14 +12,18 @@ import Kingfisher
 
 struct ArticleModel {
     
+    var hiddenId: Int
     var articleTitle: String
+    var description: String
     var date: String
     var authorName: String
     var numberOfViews: Int
     var imageUrl: URL?
     
     init(article: Article) {
+        hiddenId = article.id ?? 0
         articleTitle = article.articleTitle ?? ""
+        description = article.description ?? ""
         date = CustomDateFormatter.convertStringToDate(dateString: article.date ?? "")
         authorName = ArticleInitialization.author
         numberOfViews = ArticleInitialization.view

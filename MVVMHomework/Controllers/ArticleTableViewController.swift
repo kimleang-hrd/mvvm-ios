@@ -15,6 +15,7 @@ class ArticleTableViewController: UITableViewController {
     
     let articleViewModel = ArticleViewModel()
     var articles = [ArticleModel]()
+    var editAtIndex: Int?
     
     var page = 1
 
@@ -59,7 +60,6 @@ class ArticleTableViewController: UITableViewController {
         self.articles = []
         self.tableView.reloadData()
         self.page = 1
-        print(articles)
         self.fetchArticles()
     }
 
@@ -75,9 +75,19 @@ class ArticleTableViewController: UITableViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! MutatingArticleViewController
+        vc.articleDelegate = self
+    }
+    
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let edit = UIContextualAction(style: .destructive, title: "Edit") { (_, _, _) in
-            print("Edit")
+            let vc = self.storyboard?.instantiateViewController(identifier: "articleMutation") as! MutatingArticleViewController
+            vc.isAdding = false
+            vc.articleModel = self.articles[indexPath.row]
+            vc.articleDelegate = self
+            self.editAtIndex = indexPath.row
+            self.navigationController?.pushViewController(vc, animated: true)
         }
         edit.backgroundColor = .systemGreen
         edit.image = UIImage(systemName: "pencil")
@@ -86,10 +96,20 @@ class ArticleTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
-            print("Delete")
+            let id = self.articles[indexPath.row].hiddenId
+            self.articleViewModel.deleteArticle(id: id) {
+                self.articles.remove(at: indexPath.row)
+                self.tableView.reloadData()
+            }
         }
         delete.image = UIImage(systemName: "trash")
         return UISwipeActionsConfiguration(actions: [delete])
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = storyboard?.instantiateViewController(identifier: "detailArticle") as! DetailViewController
+        vc.articleModel = articles[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func fetchArticles() {
@@ -102,6 +122,20 @@ class ArticleTableViewController: UITableViewController {
             self.tableView.reloadData()
             self.loadMore.stopAnimating()
             self.refreshArticleControl.endRefreshing()
+        }
+    }
+}
+
+extension ArticleTableViewController: ArticleDelegate {
+    func didFinishInsertingArticle(_ article: ArticleModel) {
+        self.articles.insert(article, at: 0)
+        self.tableView.reloadData()
+    }
+    func didFinishUpdatingArticle(_ article: ArticleModel) {
+        if let editAtIndex = editAtIndex {
+            self.articles.remove(at: editAtIndex)
+            self.articles.insert(article, at: editAtIndex)
+            self.tableView.reloadData()
         }
     }
 }
