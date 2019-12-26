@@ -18,6 +18,22 @@ class ArticleTableViewController: UITableViewController {
     var editAtIndex: Int?
     
     var page = 1
+    
+    override func loadView() {
+        super.loadView()
+        
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navBarAppearance.backgroundColor = .systemOrange
+
+        navigationController?.navigationBar.standardAppearance = navBarAppearance
+        navigationController?.navigationBar.compactAppearance = navBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+
+        navigationController?.navigationBar.tintColor = .white
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +51,6 @@ class ArticleTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return articles.count
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = Bundle.main.loadNibNamed("ArticleTableViewCell", owner: self, options: [:])?.first! as! ArticleTableViewCell
@@ -96,10 +111,17 @@ class ArticleTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
-            let id = self.articles[indexPath.row].hiddenId
-            self.articleViewModel.deleteArticle(id: id) {
-                self.articles.remove(at: indexPath.row)
-                self.tableView.reloadData()
+            SweetAlert().showAlert("Are you sure?", subTitle: "You article will permanently delete!", style: .warning, buttonTitle:"No, Cancel", buttonColor: .blue, otherButtonTitle:  "Yes, Delete", otherButtonColor: .red) { (isOtherButton) -> Void in
+                if isOtherButton == true {
+                    SweetAlert().showAlert("Cancelled!", subTitle: "Your article is safe", style: .error).animateAlert()
+                } else {
+                    SweetAlert().showAlert("Deleted!", subTitle: "Your article has been deleted!", style: .success).animateAlert()
+                    let id = self.articles[indexPath.row].hiddenId
+                    self.articleViewModel.deleteArticle(id: id) {
+                        self.articles.remove(at: indexPath.row)
+                        self.tableView.reloadData()
+                    }
+                }
             }
         }
         delete.image = UIImage(systemName: "trash")

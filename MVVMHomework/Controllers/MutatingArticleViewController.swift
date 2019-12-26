@@ -78,29 +78,9 @@ class MutatingArticleViewController: UIViewController {
                 return
             }
             if self.isAdding {
-                var article = Article()
-                article.articleTitle = self.titleTextField.text
-                article.description = self.descriptionTextField.text
-                self.articleViewModel.addArticle(image: self.imageView.image ?? UIImage(), article: article) { [weak self] (articleModel) in
-                    guard let self = self else {
-                        return
-                    }
-                    self.articleDelegate?.didFinishInsertingArticle(articleModel)
-                    self.navigationController?.popViewController(animated: true)
-                }
+                self.insertArticle()
              } else {
-                var article = Article()
-                article.articleTitle = self.titleTextField.text
-                article.description = self.descriptionTextField.text
-                article.imageUrl = self.articleModel?.imageUrl?.absoluteString
-                article.id = self.articleModel?.hiddenId
-                self.articleViewModel.updateArticle(isImageNotChanged: self.isImageNotChanged, image: self.imageView.image ?? UIImage(), article: article) { [weak self] (articleModel) in
-                    guard let self = self else {
-                        return
-                    }
-                    self.articleDelegate?.didFinishUpdatingArticle(articleModel)
-                    self.navigationController?.popViewController(animated: true)
-                }
+                self.updateArticle()
             }
         }
         actionButton.addItem(action)
@@ -115,6 +95,50 @@ class MutatingArticleViewController: UIViewController {
         actionButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
         actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
     }
+    
+    func insertArticle() {
+        var article = Article()
+        article.articleTitle = self.titleTextField.text
+        article.description = self.descriptionTextField.text
+        SweetAlert().showLoadingScreen(self)
+        self.articleViewModel.addArticle(image: self.imageView.image ?? UIImage(), article: article) { [weak self] (articleModel) in
+            guard let self = self else {
+                return
+            }
+            SweetAlert().showAlert("Success", subTitle: "You have inserted successfully.", style: .success, buttonTitle: "Ok") { [weak self] (_) in
+                guard let self = self else {
+                    return
+                }
+                self.articleDelegate?.didFinishInsertingArticle(articleModel)
+                self.navigationController?.popViewController(animated: true)
+            }.animateAlert()
+            SweetAlert().dismissLoadingScreen(self)
+        }
+    }
+    
+    func updateArticle() {
+        var article = Article()
+        article.articleTitle = self.titleTextField.text
+        article.description = self.descriptionTextField.text
+        article.imageUrl = self.articleModel?.imageUrl?.absoluteString
+        article.id = self.articleModel?.hiddenId
+        SweetAlert().showLoadingScreen(self)
+        self.articleViewModel.updateArticle(isImageNotChanged: self.isImageNotChanged, image: self.imageView.image ?? UIImage(), article: article) { [weak self] (articleModel) in
+            guard let self = self else {
+                return
+            }
+            SweetAlert().showAlert("Success", subTitle: "You have updated successfully.", style: .success, buttonTitle: "Ok") { [weak self] (_) in
+                guard let self = self else {
+                    return
+                }
+                self.articleDelegate?.didFinishUpdatingArticle(articleModel)
+                self.navigationController?.popViewController(animated: true)
+            }.animateAlert()
+            SweetAlert().dismissLoadingScreen(self)
+        }
+    }
+    
+    
     
 }
 
@@ -131,3 +155,4 @@ extension MutatingArticleViewController: UIImagePickerControllerDelegate, UINavi
         self.isImageNotChanged = false
     }
 }
+

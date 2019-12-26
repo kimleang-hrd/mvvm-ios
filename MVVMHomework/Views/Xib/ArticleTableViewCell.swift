@@ -29,10 +29,10 @@ class ArticleTableViewCell: UITableViewCell {
     
     func setupCell(_ articleModel: ArticleModel) {
         articleImageView.kf.setImage(with: articleModel.imageUrl, placeholder: UIImage(named: "default"))
-        titleLabel.text = articleModel.articleTitle
-        numberOfViewLabel.text = "\(articleModel.numberOfViews)"
-        dateLabel.text = articleModel.date
-        authorLabel.text = articleModel.authorName
+        titleLabel.text = articleModel.articleTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        numberOfViewLabel.text = "\(articleModel.numberOfViews)".trimmingCharacters(in: .whitespacesAndNewlines)
+        dateLabel.text = articleModel.date.trimmingCharacters(in: .whitespacesAndNewlines)
+        authorLabel.text = articleModel.authorName.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
     

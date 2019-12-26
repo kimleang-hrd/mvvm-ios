@@ -40,10 +40,10 @@ class DetailViewController: UIViewController {
             return
         }
         self.imageView.kf.setImage(with: article.imageUrl)
-        self.titleLabel.text = article.articleTitle
-        self.dateLabel.text = article.date
-        self.viewLabel.text = article.numberOfViews > 1 ? "\(article.numberOfViews) views" : "\(article.numberOfViews) view"
-        self.descriptionLabel.text = article.description
+        self.titleLabel.text = article.articleTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        self.dateLabel.text = article.date.isEmpty ? "No Date" : article.date
+        self.viewLabel.text = article.numberOfViews > 1 ? "\(article.numberOfViews) views".trimmingCharacters(in: .whitespacesAndNewlines) : "\(article.numberOfViews) view".trimmingCharacters(in: .whitespacesAndNewlines)
+        self.descriptionLabel.text = article.description.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
     @objc func holdToSaveImage(gesture: UILongPressGestureRecognizer) {
