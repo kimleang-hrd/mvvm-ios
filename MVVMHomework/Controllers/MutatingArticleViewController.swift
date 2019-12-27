@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import JJFloatingActionButton
 
 class MutatingArticleViewController: UIViewController {
 
@@ -15,7 +14,14 @@ class MutatingArticleViewController: UIViewController {
     @IBOutlet weak var descriptionTextField: UITextView!
     @IBOutlet weak var imageView: UIImageView!
     
-    let actionButton = JJFloatingActionButton()
+    let floatingButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .systemOrange
+        button.tintColor = .white
+        return button
+    }()
+    
     let imagePickerController = UIImagePickerController()
     
     let articleViewModel = ArticleViewModel()
@@ -28,11 +34,18 @@ class MutatingArticleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.addSubview(floatingButton)
+        
         setupFloatingActionButton()
         
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(imagePickerClicked))
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(singleTap)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        floatingButton.layer.cornerRadius = 0.5 * floatingButton.bounds.width
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,28 +85,31 @@ class MutatingArticleViewController: UIViewController {
     }
     
     func setupFloatingActionButton() {
-        let action = JJActionItem()
-        action.action = { [weak self] _ in
-            guard let self = self else {
-                return
-            }
-            if self.isAdding {
-                self.insertArticle()
-             } else {
-                self.updateArticle()
-            }
+        NSLayoutConstraint.activate([
+            self.floatingButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            self.floatingButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            self.floatingButton.heightAnchor.constraint(equalToConstant: 50),
+            self.floatingButton.widthAnchor.constraint(equalToConstant: 50),
+        ])
+        self.floatingButton.clipsToBounds = true
+        self.floatingButton.setImage(UIImage(systemName: "plus"), for: .normal)
+        UIView.animate(withDuration: 0.5) {
+            self.floatingButton.transform = CGAffineTransform(translationX: -16, y: -16)
         }
-        actionButton.addItem(action)
-        actionButton.buttonColor = .systemOrange
         if isAdding {
-            actionButton.buttonImage = UIImage(systemName: "plus")
+            floatingButton.setImage(UIImage(systemName: "plus"), for: .normal)
         } else {
-            actionButton.buttonImage = UIImage(systemName: "pencil")
+            floatingButton.setImage(UIImage(systemName: "pencil"), for: .normal)
         }
-        self.view.addSubview(actionButton)
-        actionButton.translatesAutoresizingMaskIntoConstraints = false
-        actionButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
-        actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        floatingButton.addTarget(self, action: #selector(floatingButtonClicked), for: .touchUpInside)
+    }
+    
+    @objc func floatingButtonClicked() {
+        if self.isAdding {
+            self.insertArticle()
+         } else {
+            self.updateArticle()
+        }
     }
     
     func insertArticle() {
@@ -138,10 +154,7 @@ class MutatingArticleViewController: UIViewController {
         }
     }
     
-    
-    
 }
-
 extension MutatingArticleViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
